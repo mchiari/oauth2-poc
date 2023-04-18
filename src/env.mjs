@@ -7,7 +7,6 @@ import { z } from "zod";
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
   GITHUB_CLIENT_SECRET: z.string(),
-  // GITHUB_REDIRECT_URI: z.string(),
 });
 
 /**

@@ -64,5 +64,4 @@ export default async function handler(
     return response.data
   }
 
-  // res.status(200).json({ name: `Secret: ${process.env.GITHUB_CLIENT_SECRET ?? 'undefined'}` })
 }
