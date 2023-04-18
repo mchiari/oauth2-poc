@@ -18,7 +18,7 @@ export default async function handler(
 ) {
 
   try {
-    const token = await exchangeCodeForAccessToken(req.body.code)
+    const token =  String(await exchangeCodeForAccessToken(req.body.code)) ?? ''
     console.log('---- token: ', token)
     const user = await fetchUser(token);
     res.status(200)
