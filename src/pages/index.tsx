@@ -1,8 +1,54 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
+// import Link from "next/link";
+import qs from 'query-string'
+import { useEffect } from "react";
+import axios from "axios"
+
 
 const Home: NextPage = () => {
+  // console.log(process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID)
+  // console.log(process.env.NEXT_PUBLIC_BACKEND_URL)
+
+  useEffect(() => {
+
+    const sendCodeToBackend = async () => {
+      const { code } = qs.parseUrl(window.location.href).query
+      if (code && process.env.NEXT_PUBLIC_BACKEND_URL) {
+        try {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/github`, { code })
+          
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+          const user = response.data;
+          console.log('response: ', user)
+
+        } catch (error) {
+          console.log(error)
+        }
+
+      }
+
+    }
+
+    sendCodeToBackend().catch((err) => console.log(err))
+
+  }, [])
+
+
+  const redirectToGitHub = () => {
+    const GITHUB_URL = 'https://github.com/login/oauth/authorize'
+    const params = {
+      response_type: 'code',
+      scope: 'user',
+      client_id: process.env.NEXT_PUBLIC_GITHUB_CLIENT_ID,
+      redirect_uri: process.env.NEXT_PUBLIC_GITHUB_REDIRECT_URI,
+      // state: 'test-t5'
+    }
+    const queryStrings = qs.stringify(params);
+    const authURL = `${GITHUB_URL}?${queryStrings}`
+    window.location.href = authURL
+  }
+
   return (
     <>
       <Head>
@@ -12,14 +58,14 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-          <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+          <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-[3rem]">
             This is a <span className="text-[hsl(280,100%,70%)]">OAuth 2.0</span> POC
           </h1>
           <div className="flex flex-col items-center justify-center gap-4 text-white">
 
-            <Link href={'#'}><p> Github Login </p></Link>
-            <Link href={'#'}><p> Google Login </p></Link>
-            <Link href={'#'}><p> Meta Login </p></Link>
+            <button onClick={redirectToGitHub}> Github Login </button>
+            <button> Google Login </button>
+            <button> Meta Login </button>
 
           </div>
         </div>
