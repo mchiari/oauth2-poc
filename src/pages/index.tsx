@@ -130,14 +130,18 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
           <h1 className="text-3xl font-extrabold tracking-tight text-white sm:text-[3rem]">
-            This is a <span className="text-[hsl(280,100%,70%)]">OAuth 2.0</span> POC
+            This is an <span className="text-[hsl(280,100%,70%)]">OAuth 2.0</span> POC
           </h1>
           <div className="flex flex-col items-center justify-center gap-4 text-white">
 
-            <button onClick={redirectToGitHub}> Github Login </button>
-            <button onClick={redirectToGoogle}> Google Login </button>
-            <button> Meta Login </button>
+            <button className="hover:scale-105" onClick={redirectToGitHub}> Github Login (OK 18.04.2023) </button>
+            <button className="hover:scale-105" onClick={redirectToGoogle}> Google Login (OK 18.04.2023) </button>
+            <button> Meta Login (Not implemented yet) </button>
 
+          </div>
+
+          <div className="flex items-center justify-center text-white">
+            <i className="underline text-sm">Important: Open the <span className="text-[hsl(280,100%,70%)]">Developer Console</span> to see the responses! </i>
           </div>
         </div>
       </main>
